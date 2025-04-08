@@ -14,10 +14,9 @@ public class ProjectConfiguration: IEntityTypeConfiguration<Project>
             .IsRequired()
             .HasMaxLength(50);
         
-        builder.HasOne(m => m.Manager)
+        builder.HasMany(m => m.Employees)
             .WithMany(p => p.Projects)
-            .HasForeignKey(m => m.ManagerId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .UsingEntity(j => j.ToTable("ProjectEmployees"));
         
         builder.HasOne(c => c.Client)
             .WithMany(p => p.Projects)

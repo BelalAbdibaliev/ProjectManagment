@@ -11,9 +11,8 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
         builder.HasKey(e => e.Id);
         
         builder.HasMany(p => p.Projects)
-            .WithOne(e => e.Manager)
-            .HasForeignKey(e => e.ManagerId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .WithMany(e => e.Employees)
+            .UsingEntity(j => j.ToTable("ProjectEmployees"));
 
         builder.Property(e => e.FirstName)
             .IsRequired()
