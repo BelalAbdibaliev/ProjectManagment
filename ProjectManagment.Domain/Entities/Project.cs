@@ -3,7 +3,8 @@
 public class Project
 {
     public int Id { get; set; }
-    public string Name { get; set; }
+    public string Name { get; set; } = null!;
+    public int Priority { get; set; }
     
     public ClientCompany Client {get; set;}
     public int ClientId { get; set; }
