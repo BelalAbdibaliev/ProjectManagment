@@ -29,5 +29,15 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
         builder.Property(e => e.Email)
             .IsRequired()
             .HasMaxLength(60);
+        
+        builder.HasMany(e => e.Tasks)
+            .WithOne(e => e.Manager)
+            .HasForeignKey(e => e.ManagerId)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        builder.HasMany(m => m.AuthoredTasks)
+            .WithOne(e => e.Author)
+            .HasForeignKey(e => e.AuthorId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

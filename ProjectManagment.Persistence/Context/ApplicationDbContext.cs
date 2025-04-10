@@ -13,6 +13,7 @@ public class ApplicationDbContext: DbContext
     public DbSet<Project> Projects { get; set; }
     public DbSet<SupplierCompany> SupplierCompanies { get; set; }
     public DbSet<ClientCompany> ClientCompanies { get; set; }
+    public DbSet<ProjectTask> ProjectTasks { get; set; }
     public DbSet<Employee> Employees { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
