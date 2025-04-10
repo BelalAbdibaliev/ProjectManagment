@@ -10,4 +10,6 @@ public class Employee
     
     public ICollection<Project> Projects { get; set; } = new List<Project>();
     public ICollection<Project> LeadProjects { get; set; } = new List<Project>();
+    public ICollection<ProjectTask> Tasks { get; set; } = new List<ProjectTask>();
+    public ICollection<ProjectTask> AuthoredTasks { get; set; } = new List<ProjectTask>();
 }
