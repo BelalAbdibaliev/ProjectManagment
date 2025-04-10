@@ -10,4 +10,6 @@ public interface IProjectService
     Task CreateProjectAsync(CreateProjectDto project);
     Task UpdateProjectAsync(UpdateProjectDto project);
     Task DeleteProjectAsync(int projectId);
+    Task AddEmployee(int projectId, int employeeId);
+    Task RemoveEmployee(int projectId, int employeeId);
 }
