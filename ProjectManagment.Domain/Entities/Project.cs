@@ -18,4 +18,5 @@ public class Project
     public int SupplierId { get; set; }
     
     public ICollection<Employee> Employees { get; set; } = new List<Employee>();
+    public ICollection<ProjectTask> Tasks { get; set; } = new List<ProjectTask>();
 }
