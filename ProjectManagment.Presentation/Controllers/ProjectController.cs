@@ -17,13 +17,27 @@ public class ProjectController : Controller
 
     [HttpGet]
     [Route("getall")]
-    public async Task<IActionResult> GetAllProjects(int page = 1, int pageSize = 10)
+    public async Task<IActionResult> GetAllProjects(
+        [FromQuery] DateTime? startDateFrom,
+        [FromQuery] DateTime? startDateTo,
+        [FromQuery] int? priority,
+        int page = 1, int pageSize = 10)
     {
         var projects = await _projectService.GetAllProjectsAsync(page, pageSize);
+        
+        if (startDateFrom.HasValue)
+            projects = projects.Where(p => p.StartDate >= startDateFrom.Value);
+        
+        if (startDateTo.HasValue)
+            projects = projects.Where(p => p.StartDate <= startDateTo.Value);
+        
+        if (priority.HasValue)
+            projects = projects.Where(p => p.Priority == priority.Value || p.Priority > priority.Value);
+        
         if(projects is null)
             return NotFound("No projects found");
 
-        return Ok(projects);
+        return Ok(projects.ToList());
     }
 
     [HttpGet]
@@ -39,7 +53,7 @@ public class ProjectController : Controller
 
     [HttpPost]
     [Route("create")]
-    public async Task<IActionResult> CreateProject(CreateProjectDto projectDto)
+    public async Task<IActionResult> CreateProject([FromBody]CreateProjectDto projectDto)
     {
         if(!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -50,7 +64,7 @@ public class ProjectController : Controller
 
     [HttpPatch]
     [Route("update")]
-    public async Task<IActionResult> UpdateProject(UpdateProjectDto projectDto)
+    public async Task<IActionResult> UpdateProject([FromBody]UpdateProjectDto projectDto)
     {
         if(!ModelState.IsValid)
             return BadRequest(ModelState);

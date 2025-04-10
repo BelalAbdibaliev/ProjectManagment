@@ -55,9 +55,8 @@ public class ProjectRepository: IProjectRepository
             existingProject.ProjectLeadId = project.ProjectLeadId;
     }
 
-    public async Task Delete(int projectId)
+    public async Task Delete(Project project)
     {
-        var project = await _db.Projects.FindAsync(projectId);
         _db.Projects.Remove(project);
     }
 
@@ -65,6 +64,7 @@ public class ProjectRepository: IProjectRepository
     {
         project.Employees.Add(employee);
     }
+    
     public async Task RemoveEmployee(Project project, Employee employee)
     {
         if (project != null && employee != null)

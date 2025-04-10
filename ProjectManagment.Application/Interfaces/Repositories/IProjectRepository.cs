@@ -8,7 +8,7 @@ public interface IProjectRepository
     Task<Project> GetById(int id);
     Task Add(Project project);
     Task Update(Project project);
-    Task Delete(int projectId);
+    Task Delete(Project project);
     Task AddEmployee(Project project, Employee employee);
     Task RemoveEmployee(Project project, Employee employee);
     Task<Project> GetEmployeesByProject(int projectId);

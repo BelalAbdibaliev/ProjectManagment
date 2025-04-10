@@ -17,10 +17,10 @@ public class ProjectService: IProjectService
         _mapper = mapper;
     }
 
-    public async Task<List<Project>> GetAllProjectsAsync(int pageNumber, int pageSize)
+    public async Task<IQueryable<Project>> GetAllProjectsAsync(int pageNumber, int pageSize)
     {
         var projects = await _unitOfWork.Projects.GetAll(pageNumber, pageSize);
-        return projects.ToList();
+        return projects;
     }
 
     public async Task<Project> GetProjectByIdAsync(int id)
@@ -52,7 +52,11 @@ public class ProjectService: IProjectService
 
     public async Task DeleteProjectAsync(int projectId)
     {
-        await _unitOfWork.Projects.Delete(projectId);
+        var project = await _unitOfWork.Projects.GetById(projectId);
+        if (project == null)
+            throw new Exception("Project not found");
+        
+        await _unitOfWork.Projects.Delete(project);
         await _unitOfWork.SaveAsync();
     }
 

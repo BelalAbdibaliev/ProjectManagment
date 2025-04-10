@@ -10,5 +10,7 @@ public class MappingProfile: Profile
     {
         CreateMap<UpdateProjectDto, Project>();
         CreateMap<CreateProjectDto, Project>();
+        CreateMap<CreateEmployeeDto, Employee>();
+        CreateMap<UpdateEmployeeDto, Employee>();
     }
 }

@@ -1,4 +1,5 @@
-﻿using ProjectManagment.Application.Interfaces.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using ProjectManagment.Application.Interfaces.Repositories;
 using ProjectManagment.Domain.Entities;
 using ProjectManagment.Persistence.Context;
 
@@ -13,12 +14,12 @@ public class EmployeeRepository: IEmployeeRepository
         _context = context;
     }
     
-    public async Task<IQueryable<Employee>> GetAll(int pageNumber, int pageSize)
+    public async Task<List<Employee>> GetAll(int page, int pageSize)
     {
-        return _context.Employees
-            .OrderBy(p => p.Id)
-            .Skip((pageNumber - 1) * pageSize)
-            .Take(pageSize);
+        return await _context.Employees
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
     }
 
     public async Task<Employee> GetById(int id)
@@ -33,12 +34,30 @@ public class EmployeeRepository: IEmployeeRepository
 
     public async Task Update(Employee employee)
     {
-        _context.Employees.Update(employee);
+       var existingEmployee = await _context.Employees.FindAsync(employee.Id);
+       if (existingEmployee == null)
+           throw new NullReferenceException("Employee not found");
+       
+       if(!string.IsNullOrWhiteSpace(employee.FirstName))
+           existingEmployee.FirstName = employee.FirstName;
+
+       if(!string.IsNullOrWhiteSpace(employee.LastName))
+           existingEmployee.LastName = employee.LastName;
+
+       if(!string.IsNullOrWhiteSpace(employee.Email))
+           existingEmployee.Email = employee.Email;
+
+       if(!string.IsNullOrWhiteSpace(employee.MiddleName))
+           existingEmployee.MiddleName = employee.MiddleName;
     }
 
-    public async Task Delete(int employeeId)
+    public async Task Delete(Employee employee)
     {
-        var employee = await _context.Employees.FindAsync(employeeId);
         _context.Employees.Remove(employee);
+    }
+
+    public async Task<Employee?> FindByEmail(string email)
+    {
+        return await _context.Employees.FirstOrDefaultAsync(x => x.Email == email); 
     }
 }
