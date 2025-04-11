@@ -1,6 +1,6 @@
 ﻿namespace ProjectManagment.Domain.Enums;
 
-public enum TaskStatus
+public enum ProjectTaskStatus
 {
     ToDo,
     InProgress,

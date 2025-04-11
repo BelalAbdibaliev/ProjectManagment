@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Project Wizard</title>
+  <script src="https://cdnjs.cloudflare.com/aj
+        <option value="Low">Низкий</option>
+        <option value="Medium">Средний</option>
+        <option value="High">Высокий</option>
+      </select>
+    </label>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="step" data-bind="css: { active: currentStep() === 2 }">
+    <h3>Шаг 2: Компании</h3>
+    <label>Компания-заказчик: <input data-bind="value: customerCompany" /></label><br/>
+    <label>Компания-исполнитель: <input data-bind="value: executorCompany" /></label>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="step" data-bind="css: { active: currentStep() === 3 }">
+    <h3>Шаг 3: Руководитель проекта</h3>
+    <input placeholder="Поиск..." data-bind="value: managerSearch, valueUpdate: 'afterkeydown'" />
+    <ul data-bind="foreach: filteredEmployees">
+      <li><a href="#" data-bind="text: name, click: $parent.selectManager"></a></li>
+    </ul>
+    <p>Выбранный: <span data-bind="text: selectedManager"></span></p>
+  </div>
+
+  <!-- Step 4 -->
+  <div class="step" data-bind="css: { active: currentStep() === 4 }">
+    <h3>Шаг 4: Исполнители</h3>
+    <input placeholder="Поиск..." data-bind="value: executorSearch, valueUpdate: 'afterkeydown'" />
+    <ul data-bind="foreach: filteredExecutors">
+      <li><a href="#" data-bind="text: name, click: $parent.addExecutor"></a></li>
+    </ul>
+    <p>Выбранные:
+      <span data-bind="foreach: selectedExecutors">
+          <span data-bind="text: $data"></span><span> | </span>
+        </span>
+    </p>
+  </div>
+
+  <!-- Step 5 -->
+  <div class="step" data-bind="css: { active: currentStep() === 5 }">
+    <h3>Шаг 5: Документы</h3>
+    <input type="file" multiple data-bind="event: { change: handleFileUpload }" />
+    <ul data-bind="foreach: documents">
+      <li data-bind="text: name"></li>
+    </ul>
+  </div>
+
+  <div class="wizard-buttons">
+    <button data-bind="click: prevStep, enable: currentStep() > 1">Назад</button>
+    <button data-bind="click: nextStep, enable: currentStep() < 5">Далее</button>
+    <button data-bind="click: submit, visible: currentStep() === 5">Сохранить</button>
+  </div>
+</div>
+
+<script>
+  function WizardViewModel() {
+    const self = this;
+
+    self.currentStep = ko.observable(1);
+
+    self.projectName = ko.observable("");
+    self.startDate = ko.observable("");
+    self.endDate = ko.observable("");
+    self.priority = ko.observable("Medium");
+
+    self.customerCompany = ko.observable("");
+    self.executorCompany = ko.observable("");
+
+    // Сотрудники
+    self.employees = ko.observableArray([
+      { id: 1, name: "Иванов Иван" },
+      { id: 2, name: "Петров Петр" },
+      { id: 3, name: "Сидорова Анна" },
+      { id: 4, name: "Махмудов Али" }
+    ]);
+
+    self.managerSearch = ko.observable("");
+    self.executorSearch = ko.observable("");
+
+    self.filteredEmployees = ko.computed(() => {
+      const term = self.managerSearch().toLowerCase();
+      return self.employees().filter(e => e.name.toLowerCase().includes(term));
+    });
+
+    self.filteredExecutors = ko.computed(() => {
+      const term = self.executorSearch().toLowerCase();
+      return self.employees().filter(e => e.name.toLowerCase().includes(term));
+    });
+
+    self.selectedManager = ko.observable("");
+    self.selectManager = function(emp) {
+      self.selectedManager(emp.name);
+    };
+
+    self.selectedExecutors = ko.observableArray([]);
+    self.addExecutor = function(emp) {
+      if (!self.selectedExecutors().includes(emp.name)) {
+        self.selectedExecutors.push(emp.name);
+      }
+    };
+
+    // Файлы
+    self.documents = ko.observableArray([]);
+    self.handleFileUpload = function(data, e) {
+      const files = e.target.files;
+      for (let i = 0; i < files.length; i++) {
+        self.documents.push({ name: files[i].name });
+      }
+    };
+
+    self.nextStep = () => self.currentStep(self.currentStep() + 1);
+    self.prevStep = () => self.currentStep(self.currentStep() - 1);
+
+    self.submit = () => {
+      alert("Проект сохранен!");
+      console.log(ko.toJS(self));
+    };
+  }
+
+  ko.applyBindings({ wizard: new WizardViewModel() });
+</script>
+</body>
+</html>
