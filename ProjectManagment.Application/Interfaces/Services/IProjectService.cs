@@ -5,8 +5,8 @@ namespace ProjectManagment.Application.Interfaces.Services;
 
 public interface IProjectService
 {
-    Task<IQueryable<Project>> GetAllProjectsAsync(int pageNumber, int pageSize);
-    Task<Project> GetProjectByIdAsync(int id);
+    Task<IQueryable<ProjectResponse>> GetAllProjectsAsync(int pageNumber, int pageSize);
+    Task<ProjectResponse> GetProjectByIdAsync(int id);
     Task CreateProjectAsync(CreateProjectDto project);
     Task UpdateProjectAsync(UpdateProjectDto project);
     Task DeleteProjectAsync(int projectId);

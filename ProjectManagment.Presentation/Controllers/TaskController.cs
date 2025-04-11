@@ -11,20 +11,20 @@ namespace ProjectManagment.Presentation.Controllers;
 public class TaskController: Controller
 {
     private readonly ITaskService _taskService;
+    private readonly ILogger<TaskController> _logger;
 
-    public TaskController(ITaskService taskService)
+    public TaskController(ITaskService taskService, ILogger<TaskController> logger)
     {
         _taskService = taskService;
+        _logger = logger;
     }
 
     [HttpGet]
     [Route("getall")]
     public async Task<IActionResult> GetAllTasks([FromQuery] ProjectTaskStatus status, int page = 1, int pageSize = 10)
     {
-        var tasks = await _taskService.GetAllTasksAsync(page, pageSize);
-        tasks = tasks.Where(s => s.Status == status)
-            .OrderBy(s => s.Name);
-        
+        var tasks = await _taskService.GetAllTasksAsync(status ,page, pageSize);
+        _logger.LogInformation("Get all tasks");
         return Ok(await tasks.ToListAsync());
     }
 
@@ -36,6 +36,7 @@ public class TaskController: Controller
         if (task == null)
             return NotFound();
         
+        _logger.LogInformation($"Get task by id: {id}");
         return Ok(task);
     }
 
@@ -44,6 +45,7 @@ public class TaskController: Controller
     public async Task<IActionResult> CreateTask([FromBody] CreateTaskDto taskDto)
     {
         await _taskService.CreateTaskAsync(taskDto);
+        _logger.LogInformation("Created task");
         return Ok();
     }
 
@@ -52,6 +54,7 @@ public class TaskController: Controller
     public async Task<IActionResult> DeleteTask([FromQuery] int id)
     {
         await _taskService.DeleteTaskAsync(id);
+        _logger.LogInformation("Deleted task");
         return Ok();
     }
 
@@ -60,6 +63,7 @@ public class TaskController: Controller
     public async Task<IActionResult> UpdateTask([FromBody] UpdateTaskDto taskDto)
     {
         await _taskService.UpdateTaskAsync(taskDto);
+        _logger.LogInformation("Updated task");
         return Ok();
     }
 }

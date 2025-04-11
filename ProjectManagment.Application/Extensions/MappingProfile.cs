@@ -14,5 +14,8 @@ public class MappingProfile: Profile
         CreateMap<UpdateEmployeeDto, Employee>();
         CreateMap<CreateTaskDto, ProjectTask>();
         CreateMap<UpdateTaskDto, ProjectTask>();
+        CreateMap<ProjectTask, TaskResponseDto>();
+        CreateMap<Employee, EmployeeResponse>();
+        CreateMap<Project, ProjectResponse>();
     }
 }

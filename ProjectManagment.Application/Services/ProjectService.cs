@@ -17,16 +17,16 @@ public class ProjectService: IProjectService
         _mapper = mapper;
     }
 
-    public async Task<IQueryable<Project>> GetAllProjectsAsync(int pageNumber, int pageSize)
+    public async Task<IQueryable<ProjectResponse>> GetAllProjectsAsync(int pageNumber, int pageSize)
     {
         var projects = await _unitOfWork.Projects.GetAll(pageNumber, pageSize);
-        return projects;
+        return projects.Select(p => _mapper.Map<ProjectResponse>(p));
     }
 
-    public async Task<Project> GetProjectByIdAsync(int id)
+    public async Task<ProjectResponse> GetProjectByIdAsync(int id)
     {
         var project = await _unitOfWork.Projects.GetById(id);
-        return project;
+        return _mapper.Map<ProjectResponse>(project);
     }
 
     public async Task CreateProjectAsync(CreateProjectDto projectDto)

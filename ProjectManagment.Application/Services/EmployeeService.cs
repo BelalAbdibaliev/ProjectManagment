@@ -17,14 +17,16 @@ public class EmployeeService: IEmployeeService
         _mapper = mapper;
     }
     
-    public async Task<List<Employee>> GetAllEmployeesAsync(int page, int pageSize)
+    public async Task<List<EmployeeResponse>> GetAllEmployeesAsync(int page, int pageSize)
     {
-        return await _unitOfWork.Employees.GetAll(page, pageSize);
+        var employee = await _unitOfWork.Employees.GetAll(page, pageSize);
+        return employee.Select(_mapper.Map<EmployeeResponse>).ToList();
     }
 
-    public async Task<Employee> GetEmployeeByIdAsync(int id)
+    public async Task<EmployeeResponse> GetEmployeeByIdAsync(int id)
     {
-        return await _unitOfWork.Employees.GetById(id);
+        var employee = await _unitOfWork.Employees.GetById(id);
+        return _mapper.Map<EmployeeResponse>(employee);
     }
 
     public async Task CreateEmployeeAsync(CreateEmployeeDto employee)

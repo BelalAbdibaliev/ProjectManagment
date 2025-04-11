@@ -9,10 +9,12 @@ namespace ProjectManagment.Presentation.Controllers;
 public class ProjectController : Controller
 {
     private readonly IProjectService _projectService;
+    private readonly ILogger<ProjectController> _logger;
 
-    public ProjectController(IProjectService projectService)
+    public ProjectController(IProjectService projectService, ILogger<ProjectController> logger)
     {
         _projectService = projectService;
+        _logger = logger;
     }
 
     [HttpGet]
@@ -36,6 +38,8 @@ public class ProjectController : Controller
         
         if(projects is null)
             return NotFound("No projects found");
+        
+        _logger.LogInformation("Get and filtered all projects");
 
         return Ok(projects.ToList());
     }
@@ -48,6 +52,7 @@ public class ProjectController : Controller
         if(project is null)
             return NotFound();
         
+        _logger.LogInformation($"Get project by id: {id}");
         return Ok(project);
     }
 
@@ -59,6 +64,7 @@ public class ProjectController : Controller
             return BadRequest(ModelState);
         
         await _projectService.CreateProjectAsync(projectDto);
+        _logger.LogInformation($"Created project {projectDto.Name}");
         return Ok("Project created successfully!");
     }
 
@@ -70,6 +76,7 @@ public class ProjectController : Controller
             return BadRequest(ModelState);
         
         await _projectService.UpdateProjectAsync(projectDto);
+        _logger.LogInformation($"Updated project with id: {projectDto.Id}");
         return Ok("Project updated successfully!");
     }
 
@@ -78,6 +85,7 @@ public class ProjectController : Controller
     public async Task<IActionResult> DeleteProject(int id)
     {
         await _projectService.DeleteProjectAsync(id);
+        _logger.LogInformation($"Deleted project with id: {id}");
         return Ok("Project deleted successfully!");
     }
 
@@ -86,6 +94,7 @@ public class ProjectController : Controller
     public async Task<IActionResult> AddEmployee(int projectId, int employeeId)
     {
         await _projectService.AddEmployee(projectId, employeeId);
+        _logger.LogInformation($"Added employee with id: {employeeId} to project {projectId}");
         return Ok("Employee added to project successfully!");
     }
 
@@ -94,6 +103,7 @@ public class ProjectController : Controller
     public async Task<IActionResult> RemoveEmployee(int projectId, int employeeId)
     {
         await _projectService.RemoveEmployee(projectId, employeeId);
+        _logger.LogInformation($"Removed employee with id: {employeeId} from project {projectId}");
         return Ok("Employee removed from project successfully!");
     }
 }

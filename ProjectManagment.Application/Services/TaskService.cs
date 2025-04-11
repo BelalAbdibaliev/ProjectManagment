@@ -3,6 +3,7 @@ using ProjectManagment.Application.Dtos;
 using ProjectManagment.Application.Interfaces.Repositories;
 using ProjectManagment.Application.Interfaces.Services;
 using ProjectManagment.Domain.Entities;
+using ProjectManagment.Domain.Enums;
 
 namespace ProjectManagment.Application.Services;
 
@@ -17,15 +18,17 @@ public class TaskService: ITaskService
         _mapper = mapper;
     }
     
-    public async Task<IQueryable<ProjectTask>> GetAllTasksAsync(int pageNumber, int pageSize)
+    public async Task<IQueryable<TaskResponseDto>> GetAllTasksAsync(ProjectTaskStatus taskStatus ,int pageNumber, int pageSize)
     {
         var projects = await _unitOfWork.Tasks.GetAll(pageNumber, pageSize);
-        return projects;
+        projects = projects.Where(t => t.Status == taskStatus);
+        return projects.Select(p => _mapper.Map<TaskResponseDto>(p));
     }
 
-    public async Task<ProjectTask> GetTaskById(int projectTaskId)
+    public async Task<TaskResponseDto> GetTaskById(int projectTaskId)
     {
-        return await _unitOfWork.Tasks.GetById(projectTaskId);
+        var task = await _unitOfWork.Tasks.GetById(projectTaskId);
+        return _mapper.Map<TaskResponseDto>(task);
     }
 
     public async Task CreateTaskAsync(CreateTaskDto task)

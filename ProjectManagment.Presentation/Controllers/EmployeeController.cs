@@ -23,7 +23,7 @@ public class EmployeeController: Controller
     public async Task<IActionResult> GetAll([FromQuery]int page = 1, [FromQuery]int pageSize = 10)
     {
         var employees = await _employeeService.GetAllEmployeesAsync(page, pageSize);
-        
+        _logger.LogInformation($"Got all employees");
         return Ok(employees);
     }
 
@@ -32,6 +32,7 @@ public class EmployeeController: Controller
     public async Task<IActionResult> GetById(int id)
     {
         var employee = await _employeeService.GetEmployeeByIdAsync(id);
+        _logger.LogInformation($"Got employee with id: {id}");
         return Ok(employee);
     }
 
@@ -43,6 +44,7 @@ public class EmployeeController: Controller
             return BadRequest(ModelState);
         
         await _employeeService.CreateEmployeeAsync(employeeDto);
+        _logger.LogInformation("Added employee");
         return Ok();
     }
 
@@ -51,6 +53,7 @@ public class EmployeeController: Controller
     public async Task<IActionResult> Update(UpdateEmployeeDto employeeDto)
     {
         await _employeeService.UpdateEmployeeAsync(employeeDto);
+        _logger.LogInformation("Updated employee");
         return Ok("Updated successfully");
     }
 
@@ -59,6 +62,7 @@ public class EmployeeController: Controller
     public async Task<IActionResult> Delete(int id)
     {
         await _employeeService.DeleteEmployeeAsync(id);
+        _logger.LogInformation("Deleted employee");
         return Ok();
     }
 }
