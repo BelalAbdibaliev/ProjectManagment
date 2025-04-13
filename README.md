@@ -8,7 +8,7 @@
 
 ## Running
 
-Before running **you need to change connection string** to database in `appsettings.json`:
+- Before running **you need to change connection string** to database in `appsettings.json`:
 
 ```json
 "ConnectionStrings": {
@@ -16,8 +16,8 @@ Before running **you need to change connection string** to database in `appsetti
 }
 ```
 
-##Libraries
+## Libraries
 
-For database manipulations used EF Core.
-Also used AutoMapper for mappind entities and DTOs.
-For testing used NUnit and Moq.
+- For database manipulations used EF Core.
+- Also used AutoMapper for mappind entities and DTOs.
+- For testing used NUnit and Moq.
