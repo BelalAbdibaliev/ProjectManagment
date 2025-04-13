@@ -32,7 +32,7 @@
         });
 
         if (!isValid) {
-            alert('Пожалуйста, заполните все обязательные поля');
+            alert('PLEASE, FILL ALL THE FIELDS');
             return;
         }
 
@@ -46,7 +46,7 @@
             projectId: Number($('#project-id').val())
         };
 
-        console.log('Отправляемые данные:', formData);
+        console.log('SENDING DATA:', formData);
 
         $.ajax({
             url: 'http://localhost:5054/tasks/create',
@@ -55,11 +55,11 @@
             contentType: 'application/json',
             complete: function (xhr, status) {
                 if (xhr.status >= 200 && xhr.status < 300) {
-                    alert('Задача успешно создана!');
+                    alert('TASK CREATED SUCCESSFULLY');
                     window.location.href = 'index.html';
                 } else {
-                    console.error('Детали ошибки:', xhr.responseText);
-                    alert('Ошибка при создании задачи. Пожалуйста, попробуйте снова.');
+                    console.error('ERROR DETAILS;', xhr.responseText);
+                    alert('ERROR OCCURED');
                 }
             }
         });

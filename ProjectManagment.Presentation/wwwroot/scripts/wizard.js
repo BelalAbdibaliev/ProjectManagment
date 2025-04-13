@@ -156,11 +156,11 @@
             contentType: "application/json",
             complete: function (xhr, status) {
                 if (xhr.status >= 200 && xhr.status < 300) {
-                    alert('Задача успешно создана!');
+                    alert('PROJECT CREATED SUCCESSFULLY!');
                     window.location.href = 'index.html';
                 } else {
-                    console.error('Детали ошибки:', xhr.responseText);
-                    alert('Ошибка при создании задачи. Пожалуйста, попробуйте снова.');
+                    console.error('ERROR DETAILS:', xhr.responseText);
+                    alert('ERROR OCCURED');
                 }
             }
         });

@@ -1,15 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Project management system</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .button {
+            display: block;
+            padding: 15px 20px;
+            background: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background: #45a049;
+        }
+        .footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #777;
+        }
+    </style>
 </head>
-
 <body>
-    <a href="pages/wizard.html">CREATE PROJECT</a>
-    <a href="pages/task-creation.html">CREATE TASK</a>
-</body>
+<div class="container">
+    <h1>Project management system</h1>
 
+    <div class="button-container">
+        <a href="/pages/wizard.html" class="button">CREATE PROJECT</a>
+        <a href="/pages/task-creation.html" class="button">CREATE TASK</a>
+    </div>
+
+    <div class="footer">
+        <p>CHOOSE STEP TO CONTINUE WORK</p>
+    </div>
+</div>
+</body>
 </html>
