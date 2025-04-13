@@ -22,6 +22,10 @@ builder.Services.AddCors(options =>
     });
 });
 
+var options = new DefaultFilesOptions();
+options.DefaultFileNames.Clear();
+options.DefaultFileNames.Add("pages/index.html");
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -35,7 +39,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowAll");
 app.UseHttpsRedirection();
 app.UseRouting();
-app.UseDefaultFiles();
+app.UseDefaultFiles(options);
 app.UseStaticFiles();
 app.MapControllers();
 app.Run();
