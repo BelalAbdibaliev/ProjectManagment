@@ -1,17 +1,14 @@
 # 📁 ProjectManagment
 
-## 📌 Описание проекта
+## 📌 Description
+- **Persistence** – db access, `DbContext`, configurations, migrations.
+- **Presentation** – client interfaces, including frontend in `wwwroot`.
+- **Application** – buisness logic and interfaces.
+- **Domain** – entities.
 
-Проект реализован с использованием **чистой архитектуры**, и разделён на следующие слои:
+## Running
 
-- **Application** – бизнес-логика и интерфейсы.
-- **Domain** – доменные модели и сущности.
-- **Persistence** – доступ к базе данных, `DbContext`, конфигурации, миграции.
-- **Presentation** – пользовательский интерфейс, включая фронтенд в `wwwroot`.
-
-## ⚙️ Подготовка к запуску
-
-Перед запуском приложения необходимо **указать свою строку подключения** к базе данных в файле `appsettings.json`:
+Before running **you need to change connection string** to database in `appsettings.json`:
 
 ```json
 "ConnectionStrings": {
