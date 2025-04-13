@@ -1,16 +1,19 @@
-﻿# ProjectManagment
- 
-#Project Description:
+# 📁 ProjectManagment
 
-There are **Application**, **Persistence**, **Presentation** and **Domain** layers.
+## 📌 Описание проекта
 
-Database manipulations, contexts, configurations and migrations are placed in Persistence layer.
+Проект реализован с использованием **чистой архитектуры**, и разделён на следующие слои:
 
-Frontend side placed in wwwroot in Presentation layer.
+- **Application** – бизнес-логика и интерфейсы.
+- **Domain** – доменные модели и сущности.
+- **Persistence** – доступ к базе данных, `DbContext`, конфигурации, миграции.
+- **Presentation** – пользовательский интерфейс, включая фронтенд в `wwwroot`.
 
-##Before running app change the connection string in appsettings.json file to yours:
-```
+## ⚙️ Подготовка к запуску
+
+Перед запуском приложения необходимо **указать свою строку подключения** к базе данных в файле `appsettings.json`:
+
+```json
 "ConnectionStrings": {
-    "MsSqlConnection": "Data Source=yourconnectionstring"
-  }
-```
+  "MsSqlConnection": "Data Source=yourconnectionstring"
+}
