@@ -14,3 +14,9 @@ Before running **you need to change connection string** to database in `appsetti
 "ConnectionStrings": {
   "MsSqlConnection": "Data Source=yourconnectionstring"
 }
+```
+
+##Libraries
+For database manipulations used EF Core.
+Also used AutoMapper for mappind entities and DTOs.
+For testing used NUnit and Moq.
