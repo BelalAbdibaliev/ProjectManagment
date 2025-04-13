@@ -5,13 +5,13 @@
 
     function updateDebugInfo() {
         let debugInfo = 'Текущие значения формы:<br>';
-        debugInfo += 'Название: ' + $('#task-name').val() + '<br>';
-        debugInfo += 'Описание: ' + $('#task-description').val() + '<br>';
-        debugInfo += 'Приоритет: ' + $('#priority').val() + '<br>';
-        debugInfo += 'Статус: ' + $('#status').val() + '<br>';
-        debugInfo += 'ID автора: ' + $('#author-id').val() + '<br>';
-        debugInfo += 'ID ответственного: ' + $('#manager-id').val() + '<br>';
-        debugInfo += 'ID проекта: ' + $('#project-id').val() + '<br>';
+        debugInfo += 'Name: ' + $('#task-name').val() + '<br>';
+        debugInfo += 'Description: ' + $('#task-description').val() + '<br>';
+        debugInfo += 'Priority: ' + $('#priority').val() + '<br>';
+        debugInfo += 'Status: ' + $('#status').val() + '<br>';
+        debugInfo += 'Author ID: ' + $('#author-id').val() + '<br>';
+        debugInfo += 'Implemeter ID: ' + $('#manager-id').val() + '<br>';
+        debugInfo += 'Project ID: ' + $('#project-id').val() + '<br>';
 
         $('#debug-info').html(debugInfo);
     }
